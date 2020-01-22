@@ -1,0 +1,30 @@
+*{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+  }
+  .left-message::before{
+    content: '';
+      position: absolute;
+      width: 0px;
+      height: 0px;
+      left: -7px;
+      right: auto;
+      top: auto;
+      bottom: auto;
+      border: 10px solid;
+      border-color: #eeeef1 transparent transparent transparent;
+    }
+    .right-message::before{
+      content: '';
+          position: absolute;
+          width: 0px;
+          height: 0px;
+          left: auto;
+          right: -1px;
+          top: auto;
+          bottom: auto;
+          border: 10px solid;
+          border-color: #46BDDF transparent transparent transparent;
+      }
+.white-text {
+    color: #ffffff
+}

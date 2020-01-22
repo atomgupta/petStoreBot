@@ -23,10 +23,13 @@ textQuery:async function(text){
            text:{
            text:text,
            languageCode:config.dialogFlowSessionLanguageCode
+       
        }
     }
    }
+//    console.log("CHATBOT request",request)
   let responses=await sessionClient.detectIntent(request);
+//   console.log("CHATBOT RESPONsES",responses)
   return responses;
 
 },
@@ -39,13 +42,13 @@ eventQuery:async function(event,parameters={}){
         queryInput:{
             event:{
                 name:event,
-                parameters:structjson.jsonToStructProto(parameters),
+                // parameters:structjson.jsonToStructProto(parameters),
                 languageCode:config.dialogFlowSessionLanguageCode
             }
         }
     }
     let responses=await sessionClient.detectIntent(request)
-    console.log("RESPONSES",responses)
+    console.log("EVENT RESPONSES",responses)
     return responses
 
 }

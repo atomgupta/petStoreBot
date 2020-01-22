@@ -11,6 +11,7 @@ module.exports=app=>{
 
 app.post('/api/df_text_query', async(req,res)=>{
 let responses=await chatbot.textQuery(req.body.text);
+console.log("TEXT RESPONSE",responses)
 res.send(responses)
 
 
@@ -18,9 +19,10 @@ res.send(responses)
 app.post('/api/df_event_query',async(req,res)=>{
 
 let responses=await chatbot.eventQuery(req.body.event)
-let response=responses[0].queryResult.fulfillmentMessages[1].text.text;
-res.send(response)
-
+// let response=responses[0].queryResult.fulfillmentMessages[1].text.text;
+// res.send(responses)
+// console.log(responses.queryResult.fulfillmentMessages[2])
+res.send(responses)
 });
 
 
