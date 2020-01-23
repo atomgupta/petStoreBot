@@ -8,7 +8,8 @@
   .chat-bot-icon-parent{
        bottom: 35px; 
        right: 30px; 
-       position:fixed 
+       position:fixed;
+       
     }
 .chat-window{
     background: #333;
@@ -57,4 +58,20 @@
         letter-spacing:1px;
         text-align:center;
         border-radius:4px;
+}
+.message-body{
+    overflow-y: scroll;
+}
+.end-div input{
+    
+    margin:0;
+    font-size:1rem;
+    padding-left:1%;
+    padding-right:1%;
+    padding-top:5px;
+    padding-bottom: 5px;
+    width:100%;
+    border-radius:4px;
+    border:none;
+    border-top:3px solid green;
 }

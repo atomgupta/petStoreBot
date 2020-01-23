@@ -1,6 +1,6 @@
 
 const chatbot=require('../chatbot/chatbot')
-const dialogflow=require('dialogflow')
+// const dialogflow=require('dialogflow')
 
 module.exports=app=>{
 

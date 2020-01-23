@@ -1,0 +1,40 @@
+/* #butn{
+    color: #000000;
+    background: #ffffff;
+        transition: .1s ease all;
+    }
+    #butn{background: #e4f1ff }
+    #butn:hover, #butn:active{
+        background: #46BDDF;
+        color:#ffffff;
+        border: 2px solid #000000;
+        
+    }
+    #butn:active{
+        transform: scale(0.8);
+        background: #46BDDF;
+        color:#ffffff;
+        border: 6px solid #000000;
+    } */
+
+    .quick-reply-speaks a{
+        color:white;
+        display: inline-block;
+
+    }
+    #quick-replies{
+        color:white;
+        max-width: 100%; 
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
+
+    .quick-replies-parent{
+        
+        max-width: 70%;
+        margin:auto;
+        margin-top:10px;
+      
+        
+    }
