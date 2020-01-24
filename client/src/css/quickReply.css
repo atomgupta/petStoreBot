@@ -1,12 +1,13 @@
 .quick-reply-payload,.quick-reply-link{
+    width:40%;
     padding:3px;
-    border-radius:7px;
-    background-color: orange;
-    color:white;
-    /* margin-left:5px; */
-    text-decoration:none;
-    /* margin-left: 5px; */
+    border-radius:50px;
+    background-color:#e4f1ff;
+    color:#000;
     margin-bottom: 5px;
+    border:2px solid rgb(28, 79, 195);
+    margin:3px;
+    text-align:center;
    
 
 }

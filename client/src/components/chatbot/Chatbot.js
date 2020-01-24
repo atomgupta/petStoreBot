@@ -1,7 +1,10 @@
 import React from 'react'
 import '../../css/chatbot.css'
+import '../../css/cards.css'
 import Messages from './Message'
 import QuickReplies from './QuickReplies'
+import Card from './Card'
+
 const axios = require('axios');
 
 
@@ -38,10 +41,10 @@ class Chatbot extends React.Component {
     console.log("QUICK REPLY TEXT", text)
     switch (payload) {
       case 'clinic info':
-        this.df_event_query('SHOW_RECOMMENDATIONS');
+        this.df_event_query('clinic');
         break;
       case 'categories':
-        this.df_event_query('MASTERCLASS');
+        this.df_event_query('categories');
         break;
       case 'store info':
         this.df_event_query('STORE_INFO');
@@ -114,20 +117,68 @@ class Chatbot extends React.Component {
       })
     }
   }
+  renderCards(cards) {
+    return cards.map((card, i) => <Card key={i} payload={card.structValue}/>);
+}
 
   renderOneMessage(message, i) {
-    console.log("individual message", message)
+  console.log("IndiVIDUAL MESSAGE",message)
+  
+    // console.log("individual message", message)
     // console.log("MESSAGE IN RENDER MESSAGE",message)
     if (message.msg && message.msg.text && message.msg.text.text) {
       console.log("Normal MESSAGE TRIGGERED")
       return <Messages key={i} text={message.msg.text.text} speaks={message.speaks} />
     }
 
-    else if (message.msg && message.msg.payload && message.msg.payload.fields) {
+    else if (message.msg && message.msg.payload && message.msg.payload.fields && message.msg.payload.fields.signal_info.stringValue=='store details') {
+      // console.log(message.msg.payload.fields)
       console.log("CUSTOM MESSAGE TRIGGERED")
-      // return <Messages key={i} type={'extra_details'} info={message.msg.payloads.fields.detailSchema} speaks={message.speaks} />
+      // info={message.msg.payload.fields.detailSchema}
+    //  console.log(message.msg.payload.fields)
+    // let fieldss = message.msg.payload.fields.detailSchema.structValue.fields
+      let email=(message.msg.payload.fields.detailSchema.structValue.fields.request_detail_email.stringValue);
+     let location=(message.msg.payload.fields.detailSchema.structValue.fields.request_detail_location.stringValue);
+     let mob=(message.msg.payload.fields.detailSchema.structValue.fields.request_detail_mob.stringValue);
+     let name=(message.msg.payload.fields.detailSchema.structValue.fields.request_detail_name.stringValue);
+     let whatsapp=(message.msg.payload.fields.detailSchema.structValue.fields.request_detail_whatsapp.stringValue)
+     let text=[email,location,mob,name,whatsapp]
+     return <Messages key={i} type={'extra_details'} speaks={message.speaks} text={text}/>
     }
-
+    else if(message.msg && message.msg.payload && message.msg.payload.fields && message.msg.payload.fields.signal_info.stringValue=='cards'){
+      console.log("MESSAGE",message)
+      // let width=message.msg.payload.fields.cards.listValue.length*150
+      // let style={
+      //   width:
+      // }
+      // console.log("CARDS TRIGGERED")
+  //     return <div key={i}>
+  //     <div className="card-panel grey lighten-5 z-depth-1">
+  //         <div style={{overflow: 'hidden'}}>
+  //             <div className="col s2">
+  //                 <a href="/" className="btn-floating btn-large waves-effect waves-light red">{message.speaks}</a>
+  //             </div>
+  //             <div style={{ overflow: 'auto', overflowY: 'scroll'}}>
+  //                 <div style={{ height: 300, width:message.msg.payload.fields.cards.listValue.values.length * 270}}>
+  //                     {this.renderCards(message.msg.payload.fields.cards.listValue.values)}
+  //                 </div>
+  //             </div>
+  //         </div>
+  //     </div>
+  // </div>
+  return <div key={i}>
+          <div className="card-panel">
+            <div style={{ display: 'inline-block', width: '14%' }} >
+                      <img src={require('../../images/chatbot.png')} alt="botHead" style={{ width: 32, height: 37 }} className="circle responsive-img"></img>
+            </div>
+            <div  className="cards-section">
+            <div className="cards-inner-section" style={{width:message.msg.payload.fields.cards.listValue.values.length*120}}>
+            {this.renderCards(message.msg.payload.fields.cards.listValue.values)}
+            </div>
+            </div>
+          </div>
+  </div>
+    }
 
     else if (message.msg.payload.fields.quick_replies) {
       return <QuickReplies
@@ -139,6 +190,9 @@ class Chatbot extends React.Component {
       />
 
 
+    }
+    else{
+      console.log("nothing triggered")
     }
 
   }
@@ -189,20 +243,23 @@ class Chatbot extends React.Component {
               {this.renderMessages(this.state.messages)}
               <div ref={el => {
                 this.messagesEnd = el;
-              }} style={{ float: "left", clear: "both" }}
-              />{console.log("messages in state", this.state.messages)}
+              }} style={{ float: "left", clear: "both",marginTop:10}}
+              />
             </div>
             <div className="end-div">
               <div className="brand-reference-div">
                 <div className="end-footer">
                   <div>
-                    <a target="_blank" rel="noopener noreferrer" style={{ color: "#ffffff", textDecoration: 'none', paddingTop: '6px', paddingBottom: '6px' }} href="https://cogniaim.com/">
+                    <a target="_blank" rel="noopener noreferrer" style={{ color: "#ffffff", textDecoration: 'none', paddingTop: '6px',fontSize:'12px', paddingBottom: '6px' }} href="https://cogniaim.com/">
                       Powered by CogniAIm
                                 </a>
                   </div>
                 </div>
               </div>
-              <input id="message-input" placeholder="type your message here" type="text" onKeyPress={this._handleInputKeyPress} />
+              <div className="chatInput">
+              <input id="message-input" placeholder="Send a Message" type="text" onKeyPress={this._handleInputKeyPress} />
+
+              </div>
             </div>
           </div>
 

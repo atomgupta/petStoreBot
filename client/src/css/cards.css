@@ -1,0 +1,15 @@
+
+.cards-section{
+    max-width: 350px;
+    height: auto;
+  
+    flex-wrap: wrap;
+    overflow-x:scroll;
+    margin-bottom:20px;
+    
+}
+.cards-inner-section{
+   display:flex;
+    width: 600px;
+    scroll-behavior: auto;
+}

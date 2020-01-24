@@ -5,7 +5,7 @@ import '../../css/quickReply.css'
 const QuickReply = (props) => {
     if (props.reply.structValue.fields.payload) {
         return (
-            <a href='/' className="quick-reply-payload"
+            <button className="quick-reply-payload"
                onClick={(event) =>
                    props.click(
                        event,
@@ -14,7 +14,7 @@ const QuickReply = (props) => {
                    )
                }>
                 {props.reply.structValue.fields.text.stringValue}
-            </a>
+            </button>
         );
     } else {
         return (

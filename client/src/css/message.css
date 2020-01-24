@@ -1,30 +1,50 @@
 *{
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
   }
-  .left-message::before{
-    content: '';
-      position: absolute;
-      width: 0px;
-      height: 0px;
-      left: -7px;
-      right: auto;
-      top: auto;
-      bottom: auto;
-      border: 10px solid;
-      border-color: #eeeef1 transparent transparent transparent;
-    }
-    .right-message::before{
-      content: '';
-          position: absolute;
-          width: 0px;
-          height: 0px;
-          left: auto;
-          right: -1px;
-          top: auto;
-          bottom: auto;
-          border: 10px solid;
-          border-color: #46BDDF transparent transparent transparent;
-      }
+
 .white-text {
     color: #ffffff
 }
+.message-body{
+  max-width: 350px;
+}
+.left-message-parent{
+  display: inline-block;
+  width:70% 
+}
+.left-message-parent .left-message{
+
+  background-color:#eeeef1;
+   padding: 5px; border-radius: 25px; width:fit-content;
+    clear: both;
+    position: relative;
+    border-color:#ddd; border-width: 2px;
+     border-style:solid;
+   min-width: 49px;
+
+  }
+  .left-message-parent .left-message .black-text{
+    padding: 5px; 
+    font-size: 14px 
+  }
+  .s10{
+  padding-right: 15px;
+  }
+  .valign-wrapper{
+    margin-bottom: 0  
+   }
+   .right-message-parent{
+    margin-top: 10px;
+     overflow:hidden 
+ }
+   .right-message-parent .right-message{ 
+     margin-bottom:0;
+    margin-top:0.1px;
+    background-color:rgb(28, 79, 195);
+    padding:5px;
+    border-radius: 40px;
+    width:fit-content;
+     clear:both;
+    float:right;
+    position:relative 
+  }
