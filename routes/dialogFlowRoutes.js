@@ -11,7 +11,7 @@ module.exports=app=>{
 
 app.post('/api/df_text_query', async(req,res)=>{
 let responses=await chatbot.textQuery(req.body.text);
-console.log("TEXT RESPONSE",responses)
+// console.log("TEXT RESPONSE",responses)
 res.send(responses)
 
 

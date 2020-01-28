@@ -4,6 +4,7 @@ import '../../css/quickReply.css'
 
 const QuickReply = (props) => {
     if (props.reply.structValue.fields.payload) {
+        // console.log(props.reply.structValue.fields.payload.stringValue)
         return (
             <button className="quick-reply-payload"
                onClick={(event) =>

@@ -4,6 +4,7 @@ import '../../css/cards.css'
 import Messages from './Message'
 import QuickReplies from './QuickReplies'
 import Card from './Card'
+import Loading from '../../components/chatbot/Loading'
 
 const axios = require('axios');
 
@@ -23,6 +24,7 @@ class Chatbot extends React.Component {
     this.state = {
       messages: [],
       showBot: false,
+      loader: false
     }
 
     //bindings
@@ -40,15 +42,21 @@ class Chatbot extends React.Component {
     console.log("QUICK REPLY PAYLOAD", payload)
     console.log("QUICK REPLY TEXT", text)
     switch (payload) {
-      case 'clinic info':
-        this.df_event_query('clinic');
+      case 'DOIT':
+        this.df_event_query('DOIT');
         break;
-      case 'categories':
-        this.df_event_query('categories');
+      case 'homeDelivery':
+        this.df_event_query('homeDelivery');
         break;
-      case 'store info':
-        this.df_event_query('STORE_INFO');
+      case 'ADDRESS':
+        this.df_event_query('ADDRESS');
         break;
+      case 'FOOD':
+        this.df_event_query('FOOD');
+        break;
+      case 'TOYS':
+          this.df_event_query('TOYS');
+          break;  
       default:
         this.df_text_query(text);
         break;
@@ -79,7 +87,11 @@ class Chatbot extends React.Component {
       }
     }
     this.setState({ messages: [...this.state.messages, says] });
+    this.setState({
+      loader: true
+    });
     const res = await axios.post('http://localhost:5000/api/df_text_query', { text: queryText });
+    console.log("Response in df_TEXT_QUERY IN Chatbot component",res)
     // console.log("PAYLOAD FOR QUICK REPLIES",res.data[0].queryResult.fulfillmentMessages[1].payload.fields.quick_replies.listValue.values[0].structValue.fields.payload.stringValue)
     // console.log("PAYLOAD FOR QUICK REPLIES",res.data[0].queryResult.fulfillmentMessages)
     for (let msg of res.data[0].queryResult.fulfillmentMessages) {
@@ -87,21 +99,24 @@ class Chatbot extends React.Component {
         speaks: 'bot',
         msg: msg
       }
-      this.setState({ messages: [...this.state.messages, says] });
+      this.setState({ messages: [...this.state.messages, says],loader: false });
     }
     // console.log(res.data[0].queryResult.fulfillmentMessages[0].text.text)
   };
 
   //event handle function
   async df_event_query(event) {
+    this.setState({
+      loader: true
+    });
     const res = await axios.post('http://localhost:5000/api/df_event_query', { event: event })
-    console.log(res)
+    // console.log(res)
     for (let msg of res.data[0].queryResult.fulfillmentMessages) {
       let says = {
         speaks: 'bot',
         msg: msg
       }
-      this.setState({ messages: [...this.state.messages, says] })
+      this.setState({ messages: [...this.state.messages, says],loader: false })
     }
   };
 
@@ -122,7 +137,7 @@ class Chatbot extends React.Component {
 }
 
   renderOneMessage(message, i) {
-  console.log("IndiVIDUAL MESSAGE",message)
+  // console.log("IndiVIDUAL MESSAGE",message)
   
     // console.log("individual message", message)
     // console.log("MESSAGE IN RENDER MESSAGE",message)
@@ -236,11 +251,60 @@ class Chatbot extends React.Component {
         <div className="main-container">
           <div className="chat-window">
             <div className="header">
-              <img src={require('../../images/companylogo.png')} alt="companylogo" className="chat-bot-header-logo" />
+              {/* <img src={require('../../images/companylogo.png')} alt="companylogo" className="chat-bot-header-logo" /> */}
               <p className="chat-bot-header-text">Pet Bot</p>
             </div>
             <div className="message-body" id="message-body">
               {this.renderMessages(this.state.messages)}
+              {this.state.loader === true ? (
+                <div
+                  style={{ overflow: "hidden", width: "100%", marginTop: 10 }}
+                >
+                  <div style={{ display: "inline-block", width: "14%" }}>
+                    <img
+                      src={require('../../images/chatbot.png')}
+                      alt="botHead"
+                      style={{ width: 32, height: 37 }}
+                      className="circle responsive-img"
+                    ></img>
+                  </div>
+
+                  <div
+                    className="left-message-parent "
+                    style={{ display: "inline-block", width: "70%" }}
+                  >
+                    <div
+                      className="left-message card-panel z-depth-1"
+                      style={{
+                        backgroundColor: "#eeeef1",
+                        padding: 5,
+                        borderRadius: 25,
+                        width: "fit-content",
+                        clear: "both",
+                        position: "relative",
+                        borderColor: "#ddd",
+                        borderWidth: 2,
+                        borderStyle: "solid",
+                        minWidth: 49
+                      }}
+                    >
+                      <div
+                        className="row valign-wrapper"
+                        style={{ marginBottom: 0 }}
+                      >
+                        <div className="col s10" style={{ paddingRight: 15 }}>
+                          <div
+                            className="black-text"
+                            style={{ padding: 5, fontSize: 14 }}
+                          >
+                            <Loading />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
               <div ref={el => {
                 this.messagesEnd = el;
               }} style={{ float: "left", clear: "both",marginTop:10}}
@@ -257,7 +321,7 @@ class Chatbot extends React.Component {
                 </div>
               </div>
               <div className="chatInput">
-              <input id="message-input" placeholder="Send a Message" type="text" onKeyPress={this._handleInputKeyPress} />
+              <input id="message-input" placeholder="Send a Message" type="text" onKeyPress={this._handleInputKeyPress} autoComplete="off" />
 
               </div>
             </div>
